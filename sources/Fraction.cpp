@@ -24,6 +24,10 @@ Fraction::Fraction(float num){
     this->mechane = 1000/gcd;
 }
 
+Fraction::Fraction(const Fraction& other) noexcept : mone(other.getNumerator()), mechane(other.getDenominator()){
+
+}
+
 // binary operators
 Fraction Fraction::operator+ (const Fraction& other) const{
     int new_mone = (mone * other.mechane) + (other.mone * mechane);
@@ -55,10 +59,14 @@ Fraction Fraction::operator/ (const Fraction& other) const{
 
 // comparison operators
 bool Fraction::operator> (const Fraction& other) const{
-    return ((mone * other.mechane) > (other.mone * mechane));
+    return other < *this;
 }
 
 bool Fraction::operator< (const Fraction& other) const{
+    if(this->getDenominator()<0 && other.getNumerator()<0 || this->getNumerator()<0 && other.getDenominator()<0 ){
+        return ((-mone * other.mechane) < (other.mone * mechane));
+    }
+
     return ((mone * other.mechane) < (other.mone * mechane));
 }
 
@@ -67,7 +75,16 @@ bool Fraction::operator>= (const Fraction& other) const{
 }
 
 bool Fraction::operator<= (const Fraction& other) const{
-    return ((mone * other.mechane) <= (other.mone * mechane));
+    return other >= *this;
+}
+
+Fraction& Fraction::operator= (const Fraction& other) noexcept{
+    if(this != &other){
+        // delete this;
+        this->mone = other.getNumerator();
+        this->mechane = other.getDenominator();
+    }
+    return *this;
 }
 
 // increment and decrement operators
@@ -204,7 +221,7 @@ std::istream& ariel::operator>> (std::istream& input, Fraction& f){
     // Read the fraction from the input stream in the format "numerator/denominator"
     int numerator = 0;
     int denominator = 1;
-    char slash = '/';
+    int slash = '/';
 
     input >> numerator;
     if (input.fail()) {
@@ -215,17 +232,30 @@ std::istream& ariel::operator>> (std::istream& input, Fraction& f){
     input >> slash;
     if (input.fail()) {
         // Input was not in the format "numerator/denominator"
-        throw invalid_argument("The slash between the fraction is not valid");
+        throw std::runtime_error("the slash you provide is not valid");
     }
 
-    input >> denominator;
-    if (input.fail()) {
-        // Input was not a number
-        throw invalid_argument("The denominator you prvoide is not valid");
+    if(slash == '/'){
+        input >> denominator;
+        if (input.fail() || denominator == 0) {
+            // Input was not a number
+            throw std::runtime_error("The denominator you prvoide is not valid");
+        }
+        // Fraction temp(numerator, denominator);
+        // f = temp;
+        f.mone = numerator;
+        f.mechane = denominator;
     }
-
-    f.setNumerator(numerator);
-    f.setDenominator(denominator);
+    else{
+        if(slash == 0){
+            throw std::runtime_error("The denominator you prvoide is not valid");
+        }
+        cout << "slash is: " << slash << endl;
+        // Fraction temp(numerator, slash);
+        // f = temp;
+        f.mone = numerator;
+        f.mechane = slash;
+    }
     return input;
 }
 
@@ -235,14 +265,6 @@ int Fraction::getNumerator() const{
 
 int Fraction::getDenominator() const{
     return this->mechane;
-}
-
-void Fraction::setNumerator(int numerator){
-    this->mone = numerator;
-}
-
-void Fraction::setDenominator(int denominator){
-    this->mechane = denominator;
 }
 
 float ariel::FractionToFloat(const Fraction& a){

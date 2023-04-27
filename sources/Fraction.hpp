@@ -14,12 +14,11 @@ namespace ariel{
         Fraction(int numerator, int denominator);
         // Constructor for float to fraction
         Fraction(float num);
+        // copy constructor
+        Fraction(const Fraction& other) noexcept;
         // getters to the members
         int getNumerator() const;
         int getDenominator() const;
-        // setters to the Fraction members
-        void setNumerator(int numerator);
-        void setDenominator(int denominator);
         // Auxiliary function
         friend float FractionToFloat(const Fraction& fraction);
         // binary operators
@@ -31,6 +30,7 @@ namespace ariel{
         bool operator< (const Fraction& other) const;
         bool operator>= (const Fraction& other) const;
         bool operator<= (const Fraction& other) const;
+        Fraction& operator= (const Fraction& other) noexcept;
         Fraction& operator++();
         const Fraction operator++(int dummy_flag_for_postfix_increment);
         Fraction& operator--();
