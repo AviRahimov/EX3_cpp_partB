@@ -32,7 +32,6 @@ namespace ariel
         bool operator<(const Fraction &other) const;
         bool operator>=(const Fraction &other) const;
         bool operator<=(const Fraction &other) const;
-        // Fraction& operator= (const Fraction& other) noexcept;
         Fraction &operator++();
         const Fraction operator++(int dummy_flag_for_postfix_increment);
         Fraction &operator--();
@@ -60,4 +59,4 @@ namespace ariel
     }; // end of Fraction class
 }
 
-#endif // end of Fraction hpp
+#endif // EX3_CPP_FRACTION_HPP

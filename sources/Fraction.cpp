@@ -81,15 +81,6 @@ Fraction Fraction::operator/(const Fraction &other) const
     }
     Fraction inverse(other.getDenominator(), other.getNumerator());
     return *this * inverse;
-
-    // int new_mone = mone * other.mechane;
-    // int new_mechane = mechane * other.mone;
-    // int gcd = __gcd(new_mone, new_mechane);
-    // Fraction res(new_mone/gcd, new_mechane/gcd);
-    // if((*this > 0 && other > 0 && res < 0)){
-    //     throw runtime_error("Overflow error");
-    // }
-    // return res;
 }
 
 // comparison operators
@@ -279,7 +270,7 @@ istream &ariel::operator>>(istream &input, Fraction &f)
     if (input.fail())
     {
         // Input was not a number
-        throw runtime_error("The numerator you prvoide is not valid");
+        throw runtime_error("The numerator you provide is not valid");
     }
 
     input >> slash;
@@ -295,7 +286,7 @@ istream &ariel::operator>>(istream &input, Fraction &f)
         if (input.fail() || denominator == 0)
         {
             // Input was not a number
-            throw runtime_error("The denominator you prvoide is not valid");
+            throw runtime_error("The denominator you provide is not valid");
         }
         Fraction temp(numerator, denominator);
         f.mone = temp.getNumerator();
@@ -305,7 +296,7 @@ istream &ariel::operator>>(istream &input, Fraction &f)
     {
         if (slash == 0)
         {
-            throw runtime_error("The denominator you prvoide is not valid");
+            throw runtime_error("The denominator you provide is not valid");
         }
         Fraction temp(numerator, slash);
         f.mone = temp.getNumerator();
