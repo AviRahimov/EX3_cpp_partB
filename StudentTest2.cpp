@@ -634,6 +634,8 @@ TEST_SUITE("Input and output operators tests") {
         // Numerator is positive and denominator is negative
         ss.str("");
         Fraction neg_frac2{3, -4};
+        Fraction neg_frac1(3, -4);
+        cout << "mone: " << neg_frac1.getNumerator() << " mechane: " << neg_frac1.getDenominator() << endl;
         ss << neg_frac2;
         CHECK(ss.str() == "-3/4");
 
@@ -730,7 +732,6 @@ TEST_CASE("Fraction with largest possible numerator and/or denominator and overf
 
     // Test arithmetic with large numerator and/or denominator
     Fraction f4(max_int - 100, max_int);
-
     CHECK_THROWS_AS(f1 * f4, std::overflow_error);
     CHECK_THROWS_AS(f1 / f4, std::overflow_error);
 
