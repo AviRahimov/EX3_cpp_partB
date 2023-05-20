@@ -15,6 +15,9 @@ OBJECTS=$(subst sources/,objects/,$(subst .cpp,.o,$(SOURCES)))
 
 run: test1 test2
 
+mydemo: MyDemo.o $(OBJECTS) 
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
 demo: Demo.o $(OBJECTS) 
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
@@ -39,4 +42,4 @@ $(OBJECT_PATH)/%.o: $(SOURCE_PATH)/%.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) --compile $< -o $@
 
 clean:
-	rm -f $(OBJECTS) *.o test* demo*
+	rm -f $(OBJECTS) *.o test* demo* mydemo*
